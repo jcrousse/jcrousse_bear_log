@@ -1,0 +1,4 @@
+Au-delà du manque d’activité physique, en m’occupant de toi toute la journée, j’ai réalisé que je me sens aussi un peu en manque de stimulation intellectuelle.
+
+Je me suis retrouvé à réfléchir à une compétition en ligne (kaggle) invitant à développer une IA pour résoudre des rubik's cubes de différentes formes et situations de départ. J’ai imaginé des méthodes et algorithmes pour ce problème dans ma tête en te berçant.
+Je passe parfois du temps à expliquer l’algorithme des tours de hanoi avec tes anneaux a empiler pour essayer de me stimuler quand je te parle. Je ne savais pas que ce genre de puzzle deviendrait un besoin après en être éloigné pendant trop longtemps.

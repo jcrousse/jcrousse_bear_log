@@ -1,0 +1,29 @@
+Mauvaise nuit la nuit passée.
+Pour la première fois de ta vie, tu es resté éveillé 4h d'affilée! Tu n’as pas voulu dormir pour la sieste de 16h.
+Tu manges un peu moins depuis quelques jours (900/1000 a peu près), mais ta trajectoire de poids reste bonne.
+
+Je vais rapidement décrire mes choix de carrière jusqu’ici:
+A l'école secondaire, j’adorais et j’avais un don pour la programmation en c++. Du coup, faire des études d’informatique semblait un choix normal et facile.
+Pendant les études, j’ai découvert un intérêt pour les aspects plus mathématiques et théoriques de l’info que les aspects logiciels. En partie aussi influencé par les histoires entendues via les anciens étudiants qui racontaient leur travail.
+
+J’ai donc voulu trouver quelque chose qui mixait un peu plus les maths et l’informatique.
+Après un premier boulot naze de 6 mois dans une société de services (le genre de firme à fuir comme la peste, Thierry Du Pré m’avait mis en garde), j’ai commencé à travailler sur des modèles de prédiction dans le secteur bancaire (principalement risque de crédit). J’ai fait ça 3 ans chez business & decision, puis 6 ans chez EY.
+J’avais vu un reportage sur les “Quants” qui travaillaient dans la finance à Londres et écrivaient des équations sur les murs. Je voulais faire ca, et avec EY, j'étais dans leur équipe appelle “quant” et je me suis aussi parfois retrouvé à londres à écrire des équations sur les murs.
+Objectif +- atteint.
+
+Je pensais que ça ne me convenait pas mal, mais je ne voudrais jamais y retourner. Rétrospectivement, je pense que j’aurais bien aimé un rôle de software engineer.
+Mais bon, après avoir rafraîchi mes connaissance en ML via cours en ligne hors de mes heures de bureau, et avec l’aide de Pef qui m’a offert des CDD chew Jetpack qu’il venait de fonder, j’ai pu trouver un vrai travail de ML chez Allianz.
+Objectif atteint.
+C'était peut-être le meilleur boulot de ma vie jusque là (JetPack second).  Je me sentais enfin passionné et très compétent.
+
+Puis j’ai voulu continuer en tant qu'indépendant pour mieux gagner ma vie. Objectif atteint en faisant ça chez Delhaize.
+
+Puis j’ai voulu travailler pour une firme réputée, une des fameuses GAFAM (Google, Apple, Facebook, Amazon, Microsoft.. Netflix, Tesla et Nvidia méritent aussi d'être dans cette liste). Ces firmes qui ont la réputation d’avoir les meilleurs employés et de payer le mieux.
+
+Objectif atteint en rejoignant Meta (anciennement Facebook).
+
+J’ai maintenant un employeur qui paie mieux que n’importe où ailleurs, avec encore de la possibilité de progression et carrière, en travaillant dans une firme mondialement connue, les gens sont impressionnés et ont plein de questions quand je leur dit ou je travaille, en étant 100% remote, en travaillant des heures raisonnables… J’ai une chance incroyable.
+
+Le drame est que je ne peux pas le faire en Belgique. Je devrais être en France, en Allemagne ou aux Pays Bas. Et du coup, ce boulot qui semble parfait (du moins sur papier) ne sera pas du long terme.
+
+Que faire ensuite? Je ne sais pas encore. Pour l’instant je me dis que je vais essayer de mettre le plus possible d’argent de côté, et pour pouvoir choisir ensuite en priorité un travail qui me plait plutôt qu' un travail qui rapporte.
