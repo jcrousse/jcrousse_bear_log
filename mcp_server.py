@@ -6,14 +6,38 @@
 """MCP server for the bear log journal. Read entries by date, record new ones."""
 
 import os
+import subprocess
 from datetime import date, datetime
 from pathlib import Path
 
 from mcp.server.fastmcp import FastMCP
 
-DATA_DIR = Path(os.environ.get("BEAR_LOG_DATA_DIR", Path(__file__).parent / "data"))
+REPO_DIR = Path(os.environ.get("BEAR_LOG_REPO_DIR", Path(__file__).parent))
+DATA_DIR = Path(os.environ.get("BEAR_LOG_DATA_DIR", REPO_DIR / "data"))
 
 mcp = FastMCP("bear-log")
+
+
+def _git(*args: str) -> str:
+    result = subprocess.run(
+        ["git", *args], cwd=REPO_DIR, capture_output=True, text=True, timeout=30,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(f"git {' '.join(args)} failed: {result.stderr.strip()}")
+    return result.stdout.strip()
+
+
+def _git_pull():
+    _git("pull", "--rebase", "--autostash")
+
+
+def _git_push(target: Path, message: str):
+    _git("add", str(target))
+    status = _git("status", "--porcelain")
+    if not status:
+        return
+    _git("commit", "-m", message)
+    _git("push")
 
 
 def _date_from_string(date_str: str) -> date:
@@ -36,6 +60,7 @@ def get_entry(date_str: str) -> str:
     Args:
         date_str: Date to look up (YYYY-MM-DD, YYYYMMDD, or DD/MM/YYYY)
     """
+    _git_pull()
     d = _date_from_string(date_str)
     path = _entry_path(d)
     if not path.exists():
@@ -66,6 +91,7 @@ def record_entry(date_str: str, text: str) -> str:
         date_str: Date for the entry (YYYY-MM-DD, YYYYMMDD, or DD/MM/YYYY)
         text: The journal entry text to save
     """
+    _git_pull()
     d = _date_from_string(date_str)
     path = _entry_path(d)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -81,7 +107,9 @@ def record_entry(date_str: str, text: str) -> str:
             n += 1
 
     target.write_text(text, encoding="utf-8")
-    return f"Entry saved to {target.relative_to(DATA_DIR)}."
+    relative = target.relative_to(DATA_DIR)
+    _git_push(target, f"Add entry for {d.isoformat()}")
+    return f"Entry saved to {relative}."
 
 
 if __name__ == "__main__":
