@@ -7,7 +7,7 @@
 
 import os
 import subprocess
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 from mcp.server.fastmcp import FastMCP
@@ -53,18 +53,10 @@ def _entry_path(d: date) -> Path:
     return DATA_DIR / f"{d.year:04d}" / f"{d.month:02d}" / f"{d.year:04d}{d.month:02d}{d.day:02d}.txt"
 
 
-@mcp.tool()
-def get_entry(date_str: str) -> str:
-    """Fetch the journal entry for a given date. Returns the text or a not-found message.
-
-    Args:
-        date_str: Date to look up (YYYY-MM-DD, YYYYMMDD, or DD/MM/YYYY)
-    """
-    _git_pull()
-    d = _date_from_string(date_str)
+def _get_entry_for_date(d: date) -> str | None:
     path = _entry_path(d)
     if not path.exists():
-        return f"No entry found for {d.isoformat()}."
+        return None
 
     parts = [path.read_text(encoding="utf-8")]
 
@@ -79,6 +71,21 @@ def get_entry(date_str: str) -> str:
     if len(parts) == 1:
         return parts[0]
     return "\n\n--- entry {} ---\n\n".join(f"[Part {i+1}]:\n{p}" for i, p in enumerate(parts))
+
+
+@mcp.tool()
+def get_entry(date_str: str) -> str:
+    """Fetch the journal entry for a given date. Returns the text or a not-found message.
+
+    Args:
+        date_str: Date to look up (YYYY-MM-DD, YYYYMMDD, or DD/MM/YYYY)
+    """
+    _git_pull()
+    d = _date_from_string(date_str)
+    entry = _get_entry_for_date(d)
+    if entry is None:
+        return f"No entry found for {d.isoformat()}."
+    return entry
 
 
 @mcp.tool()
@@ -104,6 +111,26 @@ def record_entry(date_str: str, text: str) -> str:
     relative = path.relative_to(DATA_DIR)
     _git_push(path, f"Add entry for {d.isoformat()}")
     return f"Entry saved to {relative}."
+
+
+@mcp.tool()
+def fetch_last_n(n: int) -> str:
+    """Fetch all journal entries from the past n days (including today).
+
+    Args:
+        n: Number of days to look back
+    """
+    _git_pull()
+    today = date.today()
+    results = []
+    for i in range(n):
+        d = today - timedelta(days=i)
+        entry = _get_entry_for_date(d)
+        if entry:
+            results.append(f"## {d.isoformat()}\n{entry}")
+    if not results:
+        return f"No entries found in the past {n} days."
+    return "\n\n".join(results)
 
 
 if __name__ == "__main__":
