@@ -1,0 +1,10 @@
+{
+  "bearlog-mcp": {
+    "command": "uv",
+    "args": ["run", "mcp_server.py"],
+    "cwd": "/root/.openclaw/workspace-bear-log",
+    "env": {
+      "PYTHONUNBUFFERED": "1"
+    }
+  }
+}
