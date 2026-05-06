@@ -83,9 +83,9 @@ def get_entry(date_str: str) -> str:
 
 @mcp.tool()
 def record_entry(date_str: str, text: str) -> str:
-    """Record a new journal entry for a given date. Never overwrites existing entries.
+    """Record a new journal entry for a given date.
 
-    If an entry already exists for that date, creates a new file with _1, _2, etc. suffix.
+    If an entry already exists for that date, appends to it.
 
     Args:
         date_str: Date for the entry (YYYY-MM-DD, YYYYMMDD, or DD/MM/YYYY)
@@ -96,19 +96,13 @@ def record_entry(date_str: str, text: str) -> str:
     path = _entry_path(d)
     path.parent.mkdir(parents=True, exist_ok=True)
 
-    if not path.exists():
-        target = path
-    else:
-        n = 1
-        while True:
-            target = path.with_stem(f"{path.stem}_{n}")
-            if not target.exists():
-                break
-            n += 1
+    if path.exists():
+        existing = path.read_text(encoding="utf-8")
+        text = existing.rstrip("\n") + "\n\n" + text
 
-    target.write_text(text, encoding="utf-8")
-    relative = target.relative_to(DATA_DIR)
-    _git_push(target, f"Add entry for {d.isoformat()}")
+    path.write_text(text, encoding="utf-8")
+    relative = path.relative_to(DATA_DIR)
+    _git_push(path, f"Add entry for {d.isoformat()}")
     return f"Entry saved to {relative}."
 
 
