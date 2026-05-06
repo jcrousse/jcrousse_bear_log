@@ -206,10 +206,6 @@ def main():
         date_entries[d].append(text)
 
     duplicates = {d: texts for d, texts in date_entries.items() if len(texts) > 1}
-    if duplicates:
-        print(f"\n⚠ Duplicate dates ({len(duplicates)}):")
-        for d in sorted(duplicates):
-            print(f"  {d} — {len(duplicates[d])} entries")
 
     # ── Step 2: Write daily files ──
     print("\n" + "=" * 70)
@@ -237,9 +233,27 @@ def main():
 
     print(f"\n  Wrote {len(written_files)} unique daily files ({written_count} total entries)")
 
-    # ── Step 3: Missing / gap dates ──
+    # ── Step 3: Duplicate dates ──
     print("\n" + "=" * 70)
-    print("STEP 3: Missing / gap dates")
+    print("STEP 3: Duplicate dates")
+    print("=" * 70)
+
+    print(f"\n  Duplicates : {len(duplicates)}")
+
+    if duplicates:
+        print(f"\n  Duplicate dates by month:")
+        current_ym = None
+        for d in sorted(duplicates):
+            ym = (d.year, d.month)
+            if ym != current_ym:
+                print(f"\n    {d.strftime('%B %Y')}:")
+                current_ym = ym
+            weekday = d.strftime("%A")
+            print(f"      {d.strftime('%Y-%m-%d')}  ({weekday}) — {len(duplicates[d])} entries")
+
+    # ── Step 4: Missing / gap dates ──
+    print("\n" + "=" * 70)
+    print("STEP 4: Missing / gap dates")
     print("=" * 70)
 
     start = date(2023, 10, 1)
