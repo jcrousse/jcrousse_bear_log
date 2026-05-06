@@ -114,6 +114,38 @@ def record_entry(date_str: str, text: str) -> str:
 
 
 @mcp.tool()
+def get_same_day_previous_years(date_str: str) -> str:
+    """Fetch journal entries from the same day and month in all previous years.
+
+    Scans the data directory for available years and returns any entries
+    matching the same month/day. Useful for the daily recap prompt.
+
+    Args:
+        date_str: Reference date (YYYY-MM-DD, YYYYMMDD, or DD/MM/YYYY).
+                  Entries from the same day/month in all prior years are returned.
+    """
+    _git_pull()
+    d = _date_from_string(date_str)
+    results = []
+    for year_dir in sorted(DATA_DIR.iterdir()):
+        if not year_dir.is_dir() or not year_dir.name.isdigit():
+            continue
+        year = int(year_dir.name)
+        if year >= d.year:
+            continue
+        try:
+            past_date = d.replace(year=year)
+        except ValueError:
+            continue
+        entry = _get_entry_for_date(past_date)
+        if entry:
+            results.append(f"## {past_date.isoformat()}\n{entry}")
+    if not results:
+        return f"Aucune entrée trouvée pour le {d.day:02d}/{d.month:02d} les années précédentes."
+    return "\n\n".join(results)
+
+
+@mcp.tool()
 def fetch_last_n(n: int) -> str:
     """Fetch all journal entries from the past n days (including today).
 
